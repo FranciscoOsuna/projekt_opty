@@ -40,6 +40,7 @@ class HookeJeeves:
         Returns best found x
         """
         base_point = self.x.copy()
+        self.history.append(base_point.copy())
         delta = self.step_size
 
         for iteration in range(max_iter):
@@ -55,7 +56,7 @@ class HookeJeeves:
                 delta *= 0.5
                 base_point = new_point
 
-            self.history.append(self.func(base_point))
+            self.history.append(base_point.copy())
 
             if delta < tol:
                 break
