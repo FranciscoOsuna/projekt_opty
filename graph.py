@@ -52,7 +52,7 @@ def visualise(func, x_range=(-5, 5), y_range=(-5, 5), resolution=100, point=None
     plt.show()
 
 
-def animate(func, history, x_range=(-5, 5), y_range=(-5, 5), resolution=100):
+def animate(func, history, x_range=(-10, 10), y_range=(-10, 10), resolution=100):
     history = np.array(history)
     fitness = np.array([func(p) for p in history])
 
@@ -132,7 +132,7 @@ def animate(func, history, x_range=(-5, 5), y_range=(-5, 5), resolution=100):
         fig, update,
         init_func=init,
         frames=len(history),
-        interval=300,
+        interval=50,
         blit=False,
         repeat=False,
         save_count=len(history),

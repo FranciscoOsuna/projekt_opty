@@ -16,45 +16,56 @@ class HookeJeeves:
 
     def explore(self, base_point, delta):
         """
-        Exploratory search around base_point with step delta
-        Returns improved point
+        Exploratory search around base_point with step delta.
+        Returns an improved point or the base_point if no improvement found.
         """
         x_new = base_point.copy()
         f_base = self.func(x_new)
+
         for i in range(len(x_new)):
+            improved = False
             for direction in [+1, -1]:
                 x_trial = x_new.copy()
                 x_trial[i] += direction * delta
                 f_trial = self.func(x_trial)
                 if f_trial < f_base:
-                    x_base, f_base = x_trial, f_trial
                     x_new = x_trial
-                    break
+                    f_base = f_trial
+                    improved = True
+                    break  # Only take one successful direction per axis
+            # Continue to next dimension regardless of improvement
         return x_new
 
     def optimize(self, max_iter=100, tol=1e-6):
         """
-        Perform Hooke-Jeeves optimization
+        Perform Hooke-Jeeves optimization.
         max_iter: maximum number of iterations
         tol: tolerance for step_size
         Returns best found x
         """
         base_point = self.x.copy()
-        self.history.append(base_point.copy())
         delta = self.step_size
+        self.history.append(base_point.copy())
 
         for iteration in range(max_iter):
             # Exploratory search
             new_point = self.explore(base_point, delta)
-            # Pattern move
-            if self.func(new_point) < self.func(base_point):
+            f_base = self.func(base_point)
+            f_new = self.func(new_point)
+
+            if f_new < f_base:
+                # Pattern move attempt
                 pattern_point = new_point + self.alpha * (new_point - base_point)
-                # Further exploration around pattern_point
-                base_point = self.explore(pattern_point, delta)
+                f_pattern = self.func(pattern_point)
+
+                if f_pattern < f_new:
+                    # Move along pattern direction if it helps
+                    base_point = self.explore(pattern_point, delta)
+                else:
+                    base_point = new_point
             else:
-                # Reduce step size
+                # No improvement, reduce step size
                 delta *= 0.5
-                base_point = new_point
 
             self.history.append(base_point.copy())
 

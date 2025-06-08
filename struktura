@@ -1,0 +1,23 @@
+projekt/
+│
+├── main.py
+│   └── (uruchamia optymalizację, ustawia parametry, generuje wizualizacje)
+│
+├── hooke_jeeves.py
+│   └── HookeJeeves (klasa)
+│       ├── __init__(func, x0, step_size, alpha)
+│       ├── explore(base_point, delta)
+│       └── optimize(max_iter, tol)
+│
+├── generalized_search.py
+│   └── GeneralizedPatternSearch (klasa)
+│       ├── __init__(func, x0, step_size)
+│       ├── explore(base_point, delta)
+│       └── optimize(max_iter, tol)
+│
+├── graph.py
+│   ├── visualise(func, x_range, y_range, resolution, point)
+│   └── animate(func, history, x_range, y_range, resolution)
+│
+└── problems.py
+    └── func(x: np.ndarray) -> float  # definicje funkcji celu

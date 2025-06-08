@@ -32,7 +32,7 @@ class GeneralizedPatternSearch:
 
         return best_point, best_value
 
-    def optimize(self, max_iter=100, tol=1e-6):
+    def optimize(self, max_iter=100, tol=1e-8):
         """
         Perform Generalized Pattern Search optimization.
         Returns best found x.
